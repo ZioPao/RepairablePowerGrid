@@ -39,7 +39,14 @@ RepairablePowerGrid = {}
 
 
 function GetPowerHours()
-  return powerHours
+  
+  if ModData.get(PLM_Common.globalModDataName)["powerHours"] then
+    return ModData.get(PLM_Common.globalModDataName)["powerHours"]
+  end
+
+  return -1
+  
+
 end
 
 local function IsPowerOn()
@@ -66,7 +73,10 @@ RepairablePowerGrid.CheckStatus = function()
 
 
   if elecModifier > 0 then
-    getPlayer():Say("We should have " .. tostring(elecModifier) .. " hours")
+
+    local powerHours = GetPowerHours()
+
+    getPlayer():Say("We should have " .. tostring(powerHours) .. " hours")
   else
     getPlayer():Say("There's no power in the grid...")
   end
@@ -74,6 +84,7 @@ RepairablePowerGrid.CheckStatus = function()
 end
 
 
+------------------------------------
 
 
 RepairablePowerGrid.TurnPowerOn = function()

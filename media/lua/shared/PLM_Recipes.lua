@@ -14,6 +14,6 @@ end
 
 RepairLineRecipes.CheckStatus = function(_, _, player)
 
-  
+  RepairablePowerGrid.CheckStatus()
   
 end

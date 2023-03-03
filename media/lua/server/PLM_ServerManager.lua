@@ -8,13 +8,15 @@ local function UpdatePowerCheck()
     else
         RepairablePowerGrid.TurnPowerOff()
     end
+
+
+    sendServerCommand('RepairablePowerGrid', 'UpdatePowerHours', {value = RepairablePowerGridServer.powerHours})
   
 end
 
 
 
 local function InitPowerHours()
-
 
     RepairablePowerGridServer.powerHours = SandboxVars.ReduceGen.CD
     print(RepairablePowerGridServer.powerHours)
