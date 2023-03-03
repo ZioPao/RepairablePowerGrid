@@ -114,7 +114,7 @@ module Fuse {
 		RemoveResultItem:true,
 		Result:Fuse.FuseBox,
 		Time:2205.0,
-		OnCreate:craftFuseBox,
+		OnCreate:RepairLineRecipes.CraftFuseBox,
 		OnGiveXP:Recipe.OnGiveXP.None,
 		CanBeDoneFromFloor:true,
 		Sound:VehicleHotwireFail,

@@ -10,16 +10,24 @@ local function UpdatePowerCheck()
     end
 
 
-    sendServerCommand('RepairablePowerGrid', 'UpdatePowerHours', {value = RepairablePowerGridServer.powerHours})
-  
+    ModData.get(PLM_Common.globalModDataName)["powerHours"] = RepairablePowerGridServer.powerHours
+    ModData.transmit(PLM_Common.globalModDataName)
 end
 
 
 
 local function InitPowerHours()
 
-    RepairablePowerGridServer.powerHours = SandboxVars.ReduceGen.CD
-    print(RepairablePowerGridServer.powerHours)
+    if  ModData.get(PLM_Common.globalModDataName)["powerHours"] then
+        RepairablePowerGridServer.powerHours =  ModData.get(PLM_Common.globalModDataName)["powerHours"]
+        print("RPG: Found mod data, reusing its power hours")
+    else
+        RepairablePowerGridServer.powerHours = SandboxVars.ReduceGen.CD
+        print("RPG: no mod data, reinit")
+
+    end
+
+
     Events.EveryHours.Add(UpdatePowerCheck)
 
 end

@@ -31,6 +31,7 @@ end
 Events.OnReceiveGlobalModData.Add(OnReceiveGlobalModData)
 
 local function OnConnected()
+    print("RPG: requested mod data")
     ModData.request(PLM_Common.globalModDataName)
 end
 

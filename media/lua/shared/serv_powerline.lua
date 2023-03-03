@@ -27,29 +27,20 @@ The fusebox icon I used is from the tile made by ThrottleKitty (with permission)
 --]]
 
 
--- TODO This won't be saved obviously
 RepairablePowerGrid = {}
-
-
-
-
-
 
 --------------------------
 
 
-function GetPowerHours()
-  
+RepairablePowerGrid.GetPowerHours = function()
   if ModData.get(PLM_Common.globalModDataName)["powerHours"] then
     return ModData.get(PLM_Common.globalModDataName)["powerHours"]
   end
 
   return -1
-  
-
 end
 
-local function IsPowerOn()
+RepairablePowerGrid.IsPowerOn = function()
   -- return whether the power is on, can check the sandbox vars
   local esm = getSandboxOptions():getOptionByName("ElecShutModifier"):getValue()
   if esm == -1 then
@@ -61,28 +52,10 @@ end
 
 
 RepairablePowerGrid.Repair = function(hours)
-  RepairablePowerGridServer.powerHours = SandboxVars.ReduceGen.CD + hours
-  RepairablePowerGridServer.powerHours = RepairablePowerGridServer.powerHours + 24
+
+  ModData.get(PLM_Common.globalModDataName)["powerHours"] = SandboxVars.ReduceGen.CD + hours + 24
   RepairablePowerGrid.TurnPowerOn()
 end
-
-
-RepairablePowerGrid.CheckStatus = function()
-
-  local elecModifier = getSandboxOptions():getOptionByName("ElecShutModifier"):getValue()
-
-
-  if elecModifier > 0 then
-
-    local powerHours = GetPowerHours()
-
-    getPlayer():Say("We should have " .. tostring(powerHours) .. " hours")
-  else
-    getPlayer():Say("There's no power in the grid...")
-  end
-
-end
-
 
 ------------------------------------
 
@@ -122,43 +95,3 @@ end
 
 
 --------------------------------
-
-
--- function checkPower()
---   if not IsPowerOn() then
---     getPlayer():Say(getText("PowerGrid Needs Fixing"));
---     return;
---   end
---   if IsPowerOn() and powerHours == 1 then
---     getPlayer():Say(getText("PowerGrid: might break in " .. powerHours .. "hour"));
---     return;
---   end
-
---   if IsPowerOn() and powerHours >= 0 then
---     getPlayer():Say(getText("PowerGrid: might break in " .. powerHours .. "hours"));
---     return;
---   end
--- end
-
--- function craftFuseBox()
---   if SandboxVars.ReduceGen.Craftable == false then
---     print(getPlayer():getUsername() .. " not allowed to Crafted a FuseBox");
---     getPlayer():Say(getText("Crafting this item is not allowed by this server"));
---     getPlayer():getInventory():AddItem("Radio.ElectricWire");
---     getPlayer():getInventory():AddItem("Radio.ElectricWire");
---     getPlayer():getInventory():AddItem("Radio.ElectricWire");
---     getPlayer():getInventory():AddItem("Radio.ElectricWire");
---     getPlayer():getInventory():AddItem("Radio.ElectricWire");
---     getPlayer():getInventory():AddItem("Base.SheetMetal");
---     getPlayer():getInventory():AddItem("Base.SheetMetal");
---     getPlayer():getInventory():AddItem("Base.SheetMetal");
---     getPlayer():getInventory():AddItem("Base.SheetMetal");
---     getPlayer():getInventory():AddItem("Base.SheetMetal");
---     return
---   end
---   local fb = InventoryItemFactory.CreateItem("Fuse.FuseBox");
---   fb:setActualWeight(10);
---   fb:setWeight(10);
---   getPlayer():getInventory():AddItem(fb);
---   print(getPlayer():getUsername() .. " Crafted a FuseBox");
--- end
