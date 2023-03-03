@@ -26,15 +26,35 @@ The fusebox icon I used is from the tile made by ThrottleKitty (with permission)
 ----------------------------------------------------------------------------------------------------------------------------
 --]]
 
-local powerHours = SandboxVars.ReduceGen.CD
-print(powerHours)
+
+-- TODO This won't be saved obviously
+
+
+
+RepairablePowerGrid = {}
+
+
 
 
 
 
 --------------------------
 
-local function TurnPowerOff()
+
+function GetPowerHours()
+  return powerHours
+end
+
+
+
+RepairablePowerGrid.TurnPowerOn = function()
+  getSandboxOptions():getOptionByName("ElecShutModifier"):setValue(2147483647)
+  print("Turning power on")
+
+
+end
+
+RepairablePowerGrid.TurnPowerOff = function()
   -- turn power off using sandbox vars like you wrote above
   getSandboxOptions():getOptionByName("ElecShutModifier"):setValue(-1)
   print("Turning power off!")
@@ -53,24 +73,6 @@ end
 
 --------------------------------
 
-local function UpdatePowerCheck()
-  powerHours = powerHours - 1
-  -- print("PowerGrid: might break in " .. cdexpire .. "hours" )
-
-  if powerHours <= 0 then
-    if IsPowerOn() then
-      if SandboxVars.ReduceGen.Rate <= ZombRand(1, 100) then
-        TurnPowerOff()
-        --	print("PowerGrid: Broke!")
-      else
-        powerHours = 1
-        --    print("PowerGrid: CRITICAL!")
-        --			print("PowerGrid: might break in " .. cdexpire .. "hour" )
-      end
-    end
-  end
-end
-Events.EveryHours.Add(UpdatePowerCheck)
 
 -- function checkPower()
 --   if not IsPowerOn() then

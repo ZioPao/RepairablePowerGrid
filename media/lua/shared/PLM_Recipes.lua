@@ -8,9 +8,16 @@ RepairLineRecipes.OnTest = RepairLineRecipes.OnTest or {}
 -----------
 
 RepairLineRecipes.OnCreate.RepairGen = function(_, _, player)
-  getSandboxOptions():getOptionByName("ElecShutModifier"):setValue(2147483647)
-  powerHours = SandboxVars.ReduceGen.CD + 48
-  powerHours = powerHours + 24
-  player:Say(getText("This will hold for another " .. powerHours .. "hours "))
-  print("PowerGrid: ON! " .. powerHours .. "hours ")
+
+
+  if not isClient() and not isServer() then
+    getSandboxOptions():getOptionByName("ElecShutModifier"):setValue(2147483647)
+    powerHours = SandboxVars.ReduceGen.CD + 48
+    powerHours = powerHours + 24
+    player:Say(getText("This will hold for another " .. powerHours .. "hours "))
+    print("PowerGrid: ON! " .. powerHours .. "hours ")
+  else
+
+    sendClientCommand(getPlayer(), 'RepairablePowerGrid', 'SendRepairGen', {})
+  end
 end
