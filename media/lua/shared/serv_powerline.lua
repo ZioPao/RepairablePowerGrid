@@ -28,9 +28,6 @@ The fusebox icon I used is from the tile made by ThrottleKitty (with permission)
 
 
 -- TODO This won't be saved obviously
-
-
-
 RepairablePowerGrid = {}
 
 
@@ -45,21 +42,6 @@ function GetPowerHours()
   return powerHours
 end
 
-
-
-RepairablePowerGrid.TurnPowerOn = function()
-  getSandboxOptions():getOptionByName("ElecShutModifier"):setValue(2147483647)
-  print("Turning power on")
-
-
-end
-
-RepairablePowerGrid.TurnPowerOff = function()
-  -- turn power off using sandbox vars like you wrote above
-  getSandboxOptions():getOptionByName("ElecShutModifier"):setValue(-1)
-  print("Turning power off!")
-end
-
 local function IsPowerOn()
   -- return whether the power is on, can check the sandbox vars
   local esm = getSandboxOptions():getOptionByName("ElecShutModifier"):getValue()
@@ -69,6 +51,63 @@ local function IsPowerOn()
     return true
   end
 end
+
+
+RepairablePowerGrid.Repair = function(hours)
+  RepairablePowerGridServer.powerHours = SandboxVars.ReduceGen.CD + hours
+  RepairablePowerGridServer.powerHours = RepairablePowerGridServer.powerHours + 24
+  RepairablePowerGrid.TurnPowerOn()
+end
+
+
+RepairablePowerGrid.CheckStatus = function()
+
+  local elecModifier = getSandboxOptions():getOptionByName("ElecShutModifier"):getValue()
+
+
+  if elecModifier > 0 then
+    getPlayer():Say("We should have " .. tostring(elecModifier) .. " hours")
+  else
+    getPlayer():Say("There's no power in the grid...")
+  end
+
+end
+
+
+
+
+RepairablePowerGrid.TurnPowerOn = function()
+
+  local currentOptions = SandboxOptions.new()
+	currentOptions:copyValuesFrom(getSandboxOptions())
+
+
+  local elecShutModifierOption = currentOptions:getOptionByName("ElecShutModifier")
+
+  --print(elecShutModifierOption:getPageName())
+  --print(elecShutModifierOption:getValue())
+
+  elecShutModifierOption:setValue(2147483647)
+  currentOptions:sendToServer()
+
+  print("Turning power on")
+
+
+end
+
+RepairablePowerGrid.TurnPowerOff = function()
+  -- turn power off using sandbox vars like you wrote above
+
+  local currentOptions = SandboxOptions.new()
+	currentOptions:copyValuesFrom(getSandboxOptions())
+
+  currentOptions:getOptionByName("ElecShutModifier"):setValue(-1)
+  currentOptions:sendToServer()
+  
+  print("Turning power off!")
+end
+
+
 
 
 --------------------------------

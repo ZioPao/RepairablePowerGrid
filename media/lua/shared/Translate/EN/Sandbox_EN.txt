@@ -1,7 +1,7 @@
 Sandbox_EN = {
     Sandbox_ReduceGen = "Repair PowerGrid Mod",
 
-    Sandbox_ReduceGenCooldown = "number of hours before the power might break",
-    Sandbox_ReduceGenRate = "percent that power grid might not break . 100 means it will not break",
-    Sandbox_Craftable = "allow players to craft the fusebox?",
+    Sandbox_ReduceGenCooldown = "Amount of hours before the power might break",
+    Sandbox_ReduceGenRate = "Luck factor of power grid breaking (higher means more reliable),
+    Sandbox_Craftable = "Allow players to craft a fusebox?",
 }

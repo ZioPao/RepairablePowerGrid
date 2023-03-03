@@ -1,23 +1,19 @@
-RepairLineRecipes = RepairLineRecipes or {}
-RepairLineRecipes.GetItemTypes = RepairLineRecipes.GetItemTypes or {}
-RepairLineRecipes.OnCanPerform = RepairLineRecipes.OnCanPerform or {}
-RepairLineRecipes.OnCreate = RepairLineRecipes.OnCreate or {}
-RepairLineRecipes.OnGiveXP = RepairLineRecipes.OnGiveXP or {}
-RepairLineRecipes.OnTest = RepairLineRecipes.OnTest or {}
+RepairLineRecipes = {}
 
 -----------
+RepairLineRecipes.RepairLineAdvance = function(_, _, player)
 
-RepairLineRecipes.OnCreate.RepairGen = function(_, _, player)
+  RepairablePowerGrid.Repair(256)   -- TODO dunno
 
+end
 
-  if not isClient() and not isServer() then
-    getSandboxOptions():getOptionByName("ElecShutModifier"):setValue(2147483647)
-    powerHours = SandboxVars.ReduceGen.CD + 48
-    powerHours = powerHours + 24
-    player:Say(getText("This will hold for another " .. powerHours .. "hours "))
-    print("PowerGrid: ON! " .. powerHours .. "hours ")
-  else
+RepairLineRecipes.RepairLineNormal = function(_, _, player)
+  RepairablePowerGrid.Repair(48)
 
-    sendClientCommand(getPlayer(), 'RepairablePowerGrid', 'SendRepairGen', {})
-  end
+end
+
+RepairLineRecipes.CheckStatus = function(_, _, player)
+
+  
+  
 end
