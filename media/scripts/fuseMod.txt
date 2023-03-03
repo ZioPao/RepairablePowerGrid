@@ -1,0 +1,121 @@
+
+module Fuse {
+    imports {
+        Base
+
+    }
+		model SmallItem
+	{
+		mesh = WorldItems/Paperclip,
+		texture = WorldItems/Paperclip,
+		scale = 0.0001,
+	}
+    item Electricity
+    {
+        DisplayCategory = Material,
+        Type				=			Normal,
+        DisplayName			=		   Electricity,
+        Icon				=			Power,
+        Weight				=			2000,
+        WorldStaticModel = SmallItem,
+    }
+
+    item PowerLine
+    {
+        DisplayCategory = Material,
+        Type				=			Normal,
+        DisplayName			=		    PowerLine,
+        Icon				=			powerLines,
+        Weight				=			2000,
+        WorldStaticModel = SmallItem,
+    }
+
+    item FuseBox
+    {
+        DisplayCategory = Material,
+        Type				=			Normal,
+        DisplayName			=		    Fuse Box,
+        Icon				=			fuseBox,
+		/* this icon is from the tile made by ThrottleKitty */
+        Weight				=			2000,
+        WorldStaticModel = SmallItem,
+		MetalValue = 10,
+    }
+			recipe Check PowerGrid Status
+	{
+
+	keep Fuse.PowerLine/Fuse.FuseBox,
+	 RemoveResultItem:true,
+	   Result:Fuse.Electricity,
+	   Time:15.0,
+	OnCreate:checkPower,
+	   OnGiveXP:Recipe.OnGiveXP.None,
+	 CanBeDoneFromFloor:true,
+	Sound:VehicleHotwireFail,
+       Category:Electrical,
+	 NoBrokenItems:true,
+
+	}
+		recipe Repair Power Grid Advance
+	{
+
+
+    keep [Recipe.GetItemTypes.Screwdriver],
+	 Radio.ElectricWire=10,
+	 Base.SheetMetal=5,
+	 keep Fuse.PowerLine/Fuse.FuseBox,
+	SkillRequired:Electricity=8,
+	 RemoveResultItem:true,
+	   Result:Fuse.Electricity,
+	   Time:605.0,
+	OnCreate:Recipe.OnCreate.repairGen,
+	   OnGiveXP:Recipe.OnGiveXP.None,
+	 CanBeDoneFromFloor:true,
+	Sound:VehicleHotwireFail,
+       Category:Electrical,
+	 NoBrokenItems:true,
+        Prop1:Source=1,
+        Prop2:Source=2,
+	}
+			recipe Repair Power Grid
+	{
+		    keep [Recipe.GetItemTypes.Screwdriver],
+		 Radio.ElectricWire=20,
+		 Base.SheetMetal=10,
+	keep Fuse.PowerLine/Fuse.FuseBox,
+	SkillRequired:Electricity=2,
+	 RemoveResultItem:true,
+	   Result:Fuse.Electricity,
+	   Time:3205.0,
+	OnCreate:repairPower,
+	   OnGiveXP:Recipe.OnGiveXP.None,
+	 CanBeDoneFromFloor:true,
+	Sound:VehicleHotwireFail,
+       Category:Electrical,
+	 NoBrokenItems:true,
+        Prop1:Source=1,
+        Prop2:Source=2,
+	}
+
+			recipe Build Fuse Box
+	{
+		keep [Recipe.GetItemTypes.Screwdriver],
+		 Radio.ElectricWire=5,
+		 Base.SheetMetal=5,
+
+	SkillRequired:Electricity=10;MetalWelding=2,
+	 RemoveResultItem:true,
+	   Result:Fuse.FuseBox,
+	   Time:2205.0,
+	OnCreate:craftFuseBox,
+	   OnGiveXP:Recipe.OnGiveXP.None,
+	 CanBeDoneFromFloor:true,
+	Sound:VehicleHotwireFail,
+       Category:Electrical,
+	 NoBrokenItems:true,
+        Prop1:Source=1,
+        Prop2:Source=2,
+	}
+
+
+	}

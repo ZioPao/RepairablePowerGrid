@@ -1,0 +1,30 @@
+VERSION = 1,
+
+
+option ReduceGen.CD
+{
+	type = integer,
+	default = 336,
+    min = 1,
+    max = 100000,
+    page = ReduceGen,
+	translation = ReduceGenCooldown,
+}
+option ReduceGen.Rate
+{
+	type = integer,
+	default = 98,
+    min = 0,
+    max = 100,
+    page = ReduceGen,
+	translation = ReduceGenRate,
+}
+
+option ReduceGen.Craftable
+{
+	type = boolean,
+	 default = false,
+    page = ReduceGen,
+	translation = ReduceGenCraftable,
+}
+
